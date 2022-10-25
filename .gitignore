@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/java,netbeans,windows,macos,linux
-# Edit at https://www.toptal.com/developers/gitignore?templates=java,netbeans,windows,macos,linux
+# Created by https://www.toptal.com/developers/gitignore/api/netbeans,java,macos,linux,windows
+# Edit at https://www.toptal.com/developers/gitignore?templates=netbeans,java,macos,linux,windows
 
 ### Java ###
 # Compiled class file
@@ -15,6 +15,7 @@
 .mtj.tmp/
 
 # Package Files #
+*.jar
 *.war
 *.nar
 *.ear
@@ -80,6 +81,7 @@ Temporary Items
 **/nbproject/Package-*.bash
 build/
 nbbuild/
+dist/
 nbdist/
 .nb-gradle/
 
@@ -109,4 +111,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/java,netbeans,windows,macos,linux
+# End of https://www.toptal.com/developers/gitignore/api/netbeans,java,macos,linux,windows
