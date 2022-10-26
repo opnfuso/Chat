@@ -90,7 +90,7 @@ public class ChatScreen extends JFrame implements ActionListener {
 
         sendMessage.addActionListener(this);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(470, 300);
+        this.setSize(500, 400);
 
         this.socket = socket;
     }

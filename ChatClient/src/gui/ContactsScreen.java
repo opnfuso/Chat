@@ -28,7 +28,7 @@ public class ContactsScreen extends JFrame
 
     public ContactsScreen(ChatScreen chatScreen)
     {
-        super("Contacts");
+        super("Users");
         status = 0;
         onlineUsers = new ArrayList<>();
         model = new DefaultListModel();

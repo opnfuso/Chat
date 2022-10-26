@@ -66,12 +66,6 @@ public class LoginScreen extends JFrame implements ActionListener {
         nameBox.setUI(new JTextFieldHintUI("Ur Username", Color.GRAY));
         add(nameBox);
 
-        // p1 = new JPanel();
-        // p1.add(nameBox);
-        // tp = new JTabbedPane();
-        // tp.setBounds(200, 170, 100, 60);
-        // tp.add("Username", p1);
-        // add(tp);
         passLabel = new JLabel("Password");
         passLabel.setForeground(Color.LIGHT_GRAY);
         passLabel.setLocation(200, 200);
@@ -156,21 +150,7 @@ public class LoginScreen extends JFrame implements ActionListener {
         String jsonString = json.toString();
         socket.getOutputStream().write(jsonString.getBytes());
     }
-
-    private void onClickSignup() throws IOException {
-        String name = nameBox.getText();
-        String pass = new String(passBox.getPassword());
-
-        Map<String, String> map = new HashMap<>();
-        map.put("op", "2");
-        map.put("name", name);
-        map.put("pass", pass);
-
-        JSONObject json = new JSONObject(map);
-        String jsonString = json.toString();
-        socket.getOutputStream().write(jsonString.getBytes());
-    }
-
+    
     public int getStatus() {
         return status;
     }
