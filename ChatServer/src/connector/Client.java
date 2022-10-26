@@ -21,6 +21,7 @@ public class Client extends Thread
 {
     private Socket client;
     private User user;
+    private ArrayList<User> users;
     private UserDAO dbManager;
 
     public Client(Socket client)
@@ -305,6 +306,11 @@ public class Client extends Thread
     public User getUser() 
     {
         return user;
+    }
+    
+    public ArrayList<User> getUsers(){
+    
+        return users;
     }
 
     public void setUser(User user)

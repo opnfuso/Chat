@@ -5,6 +5,15 @@ public class User
     private int id;
     private String name;
     private String pass;
+    private boolean activo; 
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
     
     public int getId() 
     {
