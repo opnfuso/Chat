@@ -21,7 +21,7 @@ public class ChatClient {
     /**
      * @param args the command line arguments
      */
-    private static final String SERVER_IP = "127.0.0.1";
+    private static final String SERVER_IP = "192.168.84.38";
     private static final int SERVER_PORT = 1234;
 
     public static void main(String[] args) throws Exception {

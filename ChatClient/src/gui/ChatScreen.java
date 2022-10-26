@@ -50,7 +50,7 @@ public class ChatScreen extends JFrame implements ActionListener {
     {    
         setResizable(false);
         setLocationRelativeTo(null);
-        Font font = new Font("Segoe Script", Font.ITALIC, 15);
+        Font font = new Font("Arial", Font.PLAIN, 15);
         JPanel southPanel = new JPanel();
 
         this.getContentPane().add(BorderLayout.SOUTH, southPanel);
