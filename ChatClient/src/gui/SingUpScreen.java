@@ -1,50 +1,53 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package gui;
 
-import java.net.Socket;
-import java.util.HashMap;
-import java.util.Map;
-
+import TestClass.JPassFieldHintUI;
+import TestClass.JTextFieldHintUI;
+import TestClass.RoundedJPassField;
+import TestClass.RoundedJTextField;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-
+import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 import javax.swing.border.LineBorder;
-import java.awt.Color;
-
 import org.json.JSONObject;
 
-import TestClass.JTextFieldHintUI;
-import TestClass.JPassFieldHintUI;
-import TestClass.RoundedJTextField;
-import TestClass.RoundedJPassField;
-
-public class LoginScreen extends JFrame implements ActionListener {
+/**
+ *
+ * @author snowb
+ */
+public class SingUpScreen extends JFrame implements ActionListener {
 
     private static final int WIDTH = 500;
     private static final int HEIGHT = 500;
+    private int status;
 
     private JLabel nameLabel, passLabel;
     private RoundedJTextField nameBox;
-    private JButton loginButton, signupButton;
+    private JButton ResetPButton, signupButton;
     private RoundedJPassField passBox;
     private JCheckBox showPassword;
 
-    private int status;
-
     private Socket socket;
 
-    public LoginScreen(Socket socket) {
-        super("Login");
+    public SingUpScreen(Socket socket) {
+        super("SingUpScreen");
         status = 0;
         init(socket);
     }
 
     private void init(Socket socket) {
-
         // General screen options
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -66,12 +69,6 @@ public class LoginScreen extends JFrame implements ActionListener {
         nameBox.setUI(new JTextFieldHintUI("Ur Username", Color.GRAY));
         add(nameBox);
 
-        // p1 = new JPanel();
-        // p1.add(nameBox);
-        // tp = new JTabbedPane();
-        // tp.setBounds(200, 170, 100, 60);
-        // tp.add("Username", p1);
-        // add(tp);
         passLabel = new JLabel("Password");
         passLabel.setForeground(Color.LIGHT_GRAY);
         passLabel.setLocation(200, 200);
@@ -94,16 +91,16 @@ public class LoginScreen extends JFrame implements ActionListener {
         add(showPassword);
 
         // Controllers.
-        loginButton = new JButton("Login");
-        loginButton.setFocusPainted(false);
-        loginButton.setContentAreaFilled(false);
-        loginButton.setOpaque(true);
-        loginButton.setBorder(new LineBorder(Color.BLACK));
-        loginButton.setBackground(Color.DARK_GRAY);
-        loginButton.setForeground(Color.LIGHT_GRAY);
-        loginButton.setBounds(270, 300, 100, 30);
-        loginButton.addActionListener(this);
-        add(loginButton);
+        ResetPButton = new JButton("Reset Password");
+        ResetPButton.setFocusPainted(false);
+        ResetPButton.setContentAreaFilled(false);
+        ResetPButton.setOpaque(true);
+        ResetPButton.setBorder(new LineBorder(Color.BLACK));
+        ResetPButton.setBackground(Color.DARK_GRAY);
+        ResetPButton.setForeground(Color.LIGHT_GRAY);
+        ResetPButton.setBounds(270, 300, 100, 30);
+        ResetPButton.addActionListener(this);
+        add(ResetPButton);
 
         signupButton = new JButton("Signup");
         signupButton.setFocusPainted(false);
@@ -122,41 +119,29 @@ public class LoginScreen extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        if (actionEvent.getSource() == loginButton) {
-            System.out.println("Login Click");
-            try {
-                onClickLogin();
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
-        } else if (actionEvent.getSource() == signupButton) {
-            System.out.println("Signup Click");
-            this.dispose();
-            SingUpScreen singUpScreen = new SingUpScreen(this.socket);
-            singUpScreen.setVisible(true);
-        } else if (actionEvent.getSource() == showPassword) {
+        if (actionEvent.getSource() == showPassword) {
             if (showPassword.isSelected()) {
                 passBox.setEchoChar((char) 0);
             } else {
                 passBox.setEchoChar('•');
             }
+        } else if (actionEvent.getSource() == signupButton) {
+            System.out.println("Registered!");
+            try {
+                onClickSignup();
+                this.dispose();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
         }
+        else if (actionEvent.getSource() == ResetPButton) {
+            this.dispose();
+            ResetPasswordScreen resetPasswordScreen = new ResetPasswordScreen(this.socket);
+            resetPasswordScreen.setVisible(true);
+        } 
+        
     }
-
-    private void onClickLogin() throws IOException {
-        String name = nameBox.getText();
-        String pass = new String(passBox.getPassword());
-
-        Map<String, String> map = new HashMap<>();
-        map.put("op", "1");
-        map.put("name", name);
-        map.put("pass", pass);
-
-        JSONObject json = new JSONObject(map);
-        String jsonString = json.toString();
-        socket.getOutputStream().write(jsonString.getBytes());
-    }
-
+    
     private void onClickSignup() throws IOException {
         String name = nameBox.getText();
         String pass = new String(passBox.getPassword());
@@ -170,7 +155,8 @@ public class LoginScreen extends JFrame implements ActionListener {
         String jsonString = json.toString();
         socket.getOutputStream().write(jsonString.getBytes());
     }
-
+    
+    
     public int getStatus() {
         return status;
     }

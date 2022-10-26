@@ -69,6 +69,12 @@ public class Client extends Thread
                         sendMessage(message);
                         break;
                     }
+                    case 4: 
+                    {
+                        user = resetPassword(input);
+                        sendUser(user);
+                        break;
+                    }
                 }   
             } 
             catch (IOException e)
@@ -248,7 +254,23 @@ public class Client extends Thread
 
         return checkUser;
     }
-
+    
+    private User resetPassword(String input)throws WCException, JSONException, LevelEmitException, IOException{
+        JSONObject json = new JSONObject(input);
+        String name = json.getString("name");
+        String pass = json.getString("pass");
+        User user = dbManager.getUser(name);
+        if(user == null){
+            throw new WCException("Username does not exist");
+        }
+        user.setPass(pass);
+        dbManager.update(user);
+        
+        
+        return dbManager.getUser(name);
+    }
+    
+    
     private User signUp(String input) throws LevelEmitException, JSONException, WCException
     {
         if (user != null)
