@@ -15,14 +15,20 @@ INSERT INTO Users
 ) 
 VALUES 
 (
-    'David', 'BuronSuave03'
+    'Mario', '123'
 ),
 (
-    'Sam', '123'
+    'Isaac', '123'
 ), 
 (
-    'Daniel', '123'
+    'Alexis', '123'
+),
+(
+    'Javier', '123'
 ), 
 (
-    'Andres', '123'
+    'Sara', '123'
+),
+(
+    'Juan', '123'
 );
