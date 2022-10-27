@@ -17,18 +17,23 @@ import data.Message;
 import gui.ChatScreen;
 import gui.ContactsScreen;
 import gui.LoginScreen;
+import gui.SingUpScreen;
 
 public class ReaderThread extends Thread {
     private Socket socket;
     private LoginScreen loginScreen;
     private ContactsScreen contactsScreen;
     private ChatScreen chatScreen;
+    private SingUpScreen singUpScreen;
+    private int retryCount;
 
-    public ReaderThread(Socket socket, LoginScreen loginScreen, ChatScreen chatScreen, ContactsScreen contactsScreen) {
+    public ReaderThread(Socket socket, LoginScreen loginScreen, ChatScreen chatScreen, ContactsScreen contactsScreen, SingUpScreen singUpScreen) {
         this.socket = socket;
         this.loginScreen = loginScreen;
         this.chatScreen = chatScreen;
         this.contactsScreen = contactsScreen;
+        this.singUpScreen = singUpScreen;
+        this.retryCount = 0;
     }
 
     @Override
@@ -53,6 +58,7 @@ public class ReaderThread extends Thread {
 
                     // Auth success
                     case 2: {
+                        this.retryCount = 0;
                         getUser(input);
                         showMessageDialog(null, "Welcome to ChatMe, " + Account.get().getName());
                         loginScreen.setStatus(1);
@@ -108,6 +114,13 @@ public class ReaderThread extends Thread {
 
     private String getError(String input) throws JSONException {
         JSONObject json = new JSONObject(input);
+        if(json.getString("error").equalsIgnoreCase("Password is incorrect")){
+            if(this.retryCount >= 3){
+                singUpScreen.setVisible(true);
+            }else {
+                this.retryCount++;
+            }
+        }
         return json.getString("error");
     }
 
